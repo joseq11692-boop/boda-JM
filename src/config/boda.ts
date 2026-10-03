@@ -24,20 +24,20 @@ export const idiomas: readonly WeddingLocale[] = ["es"];
 // ─── La pareja ───────────────────────────────────────────────────────────
 
 export const pareja = {
-  uno: "José Alberto",
+  uno: "Jose Alberto",
   dos: "María Alejandra"
 } as const;
 
 /** Nombres completos, para el texto de la invitación. */
 export const nombresCompletos = {
-  uno: "José Alberto Quil Lindo",
+  uno: "Jose Alberto Quil Lindo",
   dos: "María Alejandra García Martínez"
 } as const;
 
-/** "José Alberto & María Alejandra": cabeceras, título de la web, correos, QR. */
+/** "Jose Alberto & María Alejandra": cabeceras, título de la web, correos, QR. */
 export const nombresPareja = `${pareja.uno} & ${pareja.dos}`;
 
-/** "José Alberto y María Alejandra" / "José Alberto i María Alejandra": para frases. */
+/** "Jose Alberto y María Alejandra" / "Jose Alberto i María Alejandra": para frases. */
 export const nombresParejaEnFrase: Record<WeddingLocale, string> = {
   es: `${pareja.uno} y ${pareja.dos}`,
   ca: `${pareja.uno} i ${pareja.dos}`
