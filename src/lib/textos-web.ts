@@ -39,6 +39,18 @@ type TextosWeb = {
     hoy: string;
     masInfo: string;
     preparacion: string;
+    ceremonia: string;
+    recepcion: string;
+    aContinuacion: string;
+    porConfirmar: string;
+    invitacionTitulo: string;
+    elGranDia: string;
+    detalles: string;
+    nosAcompanas: string;
+    nosAcompanasTexto: (fecha: string) => string;
+    verMapa: string;
+    unidades: { dias: string; horas: string; minutos: string; segundos: string };
+    cuentaAtras: string;
   };
   agenda: { titulo: string; intro: string };
   informacion: {
@@ -52,6 +64,8 @@ type TextosWeb = {
   };
   mapa: {
     titulo: string;
+    intro: string;
+    iglesiaPendiente: string;
     abrirEn: string;
     mapaDe: (lugar: string) => string;
     parada: string;
@@ -99,7 +113,19 @@ export const textosWeb: Record<WeddingLocale, TextosWeb> = {
       faltan: (dias) => (dias === 1 ? "Queda 1 día" : `Quedan ${dias} días`),
       hoy: "Hoy es el día",
       masInfo: "Más información",
-      preparacion: "Todavía no se puede responder desde la web. Lo activaremos muy pronto."
+      preparacion: "Todavía no se puede responder desde la web. Lo activaremos muy pronto.",
+      ceremonia: "Ceremonia religiosa",
+      recepcion: "Recepción",
+      aContinuacion: "A continuación",
+      porConfirmar: "Lugar por confirmar",
+      invitacionTitulo: "Tenemos el honor de invitarte",
+      elGranDia: "El gran día",
+      detalles: "Detalles",
+      nosAcompanas: "¿Nos acompañas?",
+      nosAcompanasTexto: (fecha) => `Te agradeceremos confirmar tu asistencia antes del ${fecha}.`,
+      verMapa: "Cómo llegar",
+      unidades: { dias: "Días", horas: "Horas", minutos: "Minutos", segundos: "Segundos" },
+      cuentaAtras: "Cuenta atrás para la boda"
     },
     agenda: { titulo: "Programa", intro: "Horario aproximado del día." },
     informacion: {
@@ -113,6 +139,8 @@ export const textosWeb: Record<WeddingLocale, TextosWeb> = {
     },
     mapa: {
       titulo: "Cómo llegar",
+      intro: "La ceremonia será en la iglesia y la celebración continuará en el hotel.",
+      iglesiaPendiente: "Estamos cerrando los últimos detalles. Publicaremos aquí la dirección en cuanto esté confirmada.",
       abrirEn: "Abrir en",
       mapaDe: (lugar) => `Mapa de ${lugar}`,
       parada: "Punto de recogida",
@@ -121,15 +149,15 @@ export const textosWeb: Record<WeddingLocale, TextosWeb> = {
     },
     regalo: {
       titulo: "Regalo",
-      intro: "Lo importante es que vengas. Si quieres hacernos un regalo, aquí tienes los datos.",
+      intro: "Tu presencia es nuestro mejor regalo. Si además deseas tener un detalle con nosotros, te lo agradeceremos de corazón.",
       cuenta: "Número de cuenta",
       titular: "Titular",
       concepto: "Concepto",
-      copiar: "Copiar IBAN",
+      copiar: "Copiar número de cuenta",
       copiado: "Copiado",
       errorCopiar: "No se pudo copiar",
       errorCopiarDetalle: "Cópialo a mano, por favor.",
-      sinIban: "Los datos de la cuenta todavía no están publicados."
+      sinIban: "Durante la recepción habrá lluvia de sobres para quien desee dejarnos un detalle."
     },
     calendario: "Añadir al calendario",
     pie: "Web de boda"
@@ -158,7 +186,19 @@ export const textosWeb: Record<WeddingLocale, TextosWeb> = {
       faltan: (dias) => (dias === 1 ? "Queda 1 dia" : `Queden ${dias} dies`),
       hoy: "Avui és el dia",
       masInfo: "Més informació",
-      preparacion: "Encara no es pot respondre des de la web. Ho activarem molt aviat."
+      preparacion: "Encara no es pot respondre des de la web. Ho activarem molt aviat.",
+      ceremonia: "Cerimònia religiosa",
+      recepcion: "Recepció",
+      aContinuacion: "A continuació",
+      porConfirmar: "Lloc per confirmar",
+      invitacionTitulo: "Tenim l'honor de convidar-te",
+      elGranDia: "El gran dia",
+      detalles: "Detalls",
+      nosAcompanas: "Ens acompanyes?",
+      nosAcompanasTexto: (fecha) => `Et agrairem que confirmis la teva assistència abans del ${fecha}.`,
+      verMapa: "Com arribar",
+      unidades: { dias: "Dies", horas: "Hores", minutos: "Minuts", segundos: "Segons" },
+      cuentaAtras: "Compte enrere per al casament"
     },
     agenda: { titulo: "Programa", intro: "Horari aproximat del dia." },
     informacion: {
@@ -172,6 +212,8 @@ export const textosWeb: Record<WeddingLocale, TextosWeb> = {
     },
     mapa: {
       titulo: "Com arribar",
+      intro: "La cerimònia serà a l'església i la celebració continuarà a l'hotel.",
+      iglesiaPendiente: "Publicarem aquí l'adreça tan aviat com estigui confirmada.",
       abrirEn: "Obrir a",
       mapaDe: (lugar) => `Mapa de ${lugar}`,
       parada: "Punt de recollida",
@@ -184,7 +226,7 @@ export const textosWeb: Record<WeddingLocale, TextosWeb> = {
       cuenta: "Número de compte",
       titular: "Titular",
       concepto: "Concepte",
-      copiar: "Copiar IBAN",
+      copiar: "Copiar número de compte",
       copiado: "Copiat",
       errorCopiar: "No s'ha pogut copiar",
       errorCopiarDetalle: "Copia'l a mà, si us plau.",

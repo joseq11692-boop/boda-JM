@@ -1,6 +1,6 @@
 // Datos del día ya listos para pintar, en el idioma pedido. Todo sale de
 // src/config/boda.ts: aquí solo se formatean fechas y se juntan piezas.
-import { autobus, evento, horario, textos, type WeddingLocale } from "@/config/boda";
+import { autobus, ceremonia, evento, horario, textos, type WeddingLocale } from "@/config/boda";
 
 export type { WeddingLocale };
 
@@ -9,11 +9,11 @@ type Details = {
   eventEndIso: string;
   dateLabel: string;
   dateShort: string;
-  arrivalTime: string;
   ceremonyTime: string;
-  cocktailTime: string;
-  dinnerTime: string;
-  partyTime: string;
+  ceremonyVenue: string;
+  ceremonyMapQuery: string | null;
+  receptionTime: string;
+  city: string;
   venueName: string;
   venueLocation: string;
   venueLabel: string;
@@ -27,11 +27,23 @@ type Details = {
   transportLabel: string;
   transportCopy: string;
   dressCode: string;
+  dressCodeDetail: string;
+  /** Texto para "Añadir al calendario". */
+  calendarDescription: string;
   rsvpDeadline: string;
   rsvpNote: string;
 };
 
 const intlLocale: Record<WeddingLocale, string> = { es: "es-ES", ca: "ca-ES" };
+
+/** "19:00" → "7:00 p. m." (formato de 12 horas, el habitual en Panamá). */
+export function formatHora(hora: string) {
+  const [h, m] = hora.split(":").map(Number);
+  if (Number.isNaN(h)) return hora;
+  const sufijo = h >= 12 ? "p. m." : "a. m.";
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${h12}:${String(m || 0).padStart(2, "0")} ${sufijo}`;
+}
 
 function capitalize(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
@@ -78,11 +90,11 @@ function buildDetails(locale: WeddingLocale): Details {
     eventEndIso: evento.finIso,
     dateLabel: formatLongDate(evento.inicioIso, locale),
     dateShort: formatDate(evento.inicioIso, locale),
-    arrivalTime: horario.llegada,
-    ceremonyTime: horario.ceremonia,
-    cocktailTime: horario.coctel,
-    dinnerTime: horario.cena,
-    partyTime: horario.fiesta,
+    ceremonyTime: formatHora(horario.ceremonia),
+    ceremonyVenue: ceremonia.nombre,
+    ceremonyMapQuery: ceremonia.direccionMapa,
+    receptionTime: formatHora(horario.recepcion),
+    city: t.ciudad,
     venueName: evento.lugar.nombre,
     venueLocation: evento.lugar.ciudad,
     venueLabel: evento.lugar.nombre,
@@ -96,6 +108,8 @@ function buildDetails(locale: WeddingLocale): Details {
     transportLabel: t.transporteTitulo,
     transportCopy: t.transporteTexto,
     dressCode: t.vestimenta,
+    dressCodeDetail: t.vestimentaDetalle,
+    calendarDescription: `${formatHora(horario.ceremonia)} · ${ceremonia.nombre}. ${formatHora(horario.recepcion)} · ${evento.lugar.nombre}, ${evento.lugar.ciudad}.`,
     rsvpDeadline: formatDate(evento.rsvpLimiteIso, locale),
     rsvpNote: t.notaRsvp
   };

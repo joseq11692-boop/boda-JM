@@ -21,7 +21,7 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
-const openGraphLocale = { es: "es_ES", ca: "ca_ES" } as const;
+const openGraphLocale = { es: "es_PA", ca: "ca_ES" } as const;
 
 export async function generateMetadata({
   params
@@ -59,7 +59,7 @@ export default async function PublicLayout({
   }
 
   return (
-    <div lang={lang} className="flex min-h-screen flex-col bg-background">
+    <div lang={lang} className="web-boda flex min-h-screen flex-col bg-background font-sans">
       {/* El <html> lo pinta el layout raíz, que es estático y no conoce el
           idioma de la rama. Este script corrige el atributo antes del primer
           pintado para que lectores de pantalla y buscadores lo vean bien. */}

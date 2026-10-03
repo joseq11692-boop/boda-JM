@@ -50,7 +50,7 @@ export default async function RsvpAccessPage({
 
   return (
     <Pagina titulo={text.title} intro={text.description} locale={locale}>
-      <form action={openRsvpAccessAction} className="grid max-w-md gap-4">
+      <form action={openRsvpAccessAction} className="mx-auto grid max-w-md gap-5 text-center">
         <input name="lang" type="hidden" value={locale} />
         {invalid ? (
           <p id="code-error" role="alert" className="rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm">
@@ -58,12 +58,12 @@ export default async function RsvpAccessPage({
           </p>
         ) : null}
         <div className="grid gap-2">
-          <Label htmlFor="code">{text.label}</Label>
+          <Label htmlFor="code" className="justify-center">{text.label}</Label>
           <Input
             autoComplete="off"
             autoCapitalize="characters"
             autoCorrect="off"
-            className="font-mono text-lg uppercase tracking-widest"
+            className="h-14 text-center font-display !text-2xl uppercase tracking-[0.3em]"
             id="code"
             name="code"
             placeholder={text.placeholder}

@@ -47,6 +47,18 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))"
         },
+        // Web de invitados: dorado champán y azul noche (src/styles/tokens.css)
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          soft: "hsl(var(--gold-soft))",
+          ink: "hsl(var(--gold-ink))"
+        },
+        night: {
+          DEFAULT: "hsl(var(--night))",
+          deep: "hsl(var(--night-deep))",
+          foreground: "hsl(var(--on-night))",
+          muted: "hsl(var(--on-night-muted))"
+        },
         // Tokens nuevos del sistema de diseño (lectura directa, no HSL)
         "theme-primary": "var(--theme-primary)",
         "theme-primary-soft": "var(--theme-primary-soft)",
@@ -88,7 +100,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", "sans-serif"],
-        display: ["var(--font-display)", "sans-serif"]
+        display: ["var(--font-display)", "serif"]
       },
       keyframes: {
         "fade-up": {

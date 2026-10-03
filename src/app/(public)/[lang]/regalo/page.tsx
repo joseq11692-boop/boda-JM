@@ -26,7 +26,9 @@ export default async function RegaloPage({ params }: { params: Promise<{ lang: s
   return (
     <Pagina titulo={t.titulo} intro={t.intro} locale={locale}>
       {sinIban ? (
-        <p className="rounded-md border border-border bg-muted px-4 py-3 text-sm">{t.sinIban}</p>
+        <p className="border-y border-gold/40 py-10 text-center font-display text-2xl font-light leading-relaxed">
+          {t.sinIban}
+        </p>
       ) : (
         <div className="space-y-4">
           <ListaDatos

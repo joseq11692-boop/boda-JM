@@ -73,7 +73,7 @@ const labels = {
 /** Tres enlaces simples: Google, Outlook y archivo .ics para el resto. */
 export function AddToCalendar(props: AddToCalendarProps) {
   const t = labels[props.locale ?? "es"];
-  const enlace = "text-primary underline underline-offset-4 hover:no-underline";
+  const enlace = "text-foreground underline decoration-[hsl(var(--gold))] underline-offset-4 hover:decoration-2";
 
   return (
     <p className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">

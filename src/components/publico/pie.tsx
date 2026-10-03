@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { nombresPareja, type WeddingLocale } from "@/config/boda";
+import { Filete, Monograma } from "@/components/publico/adornos";
 import { getWeddingDetails } from "@/lib/wedding-details";
 import { menuPublico, rutaPublica, textosWeb } from "@/lib/textos-web";
 
@@ -8,14 +9,21 @@ export function Pie({ locale }: { locale: WeddingLocale }) {
   const d = getWeddingDetails(locale);
 
   return (
-    <footer className="mt-16 border-t border-border">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-4 py-8 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <p>
-          {nombresPareja} · {d.dateShort}
+    <footer className="cielo-noche grano mt-24">
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-6 px-4 py-16 text-center sm:px-6">
+        <Monograma tamano={72} />
+        <p className="font-display text-2xl font-light sm:text-3xl">{nombresPareja}</p>
+        <p className="eyebrow text-night-muted">
+          {d.dateShort} · {d.city}
         </p>
-        <nav aria-label={t.pie} className="flex flex-wrap gap-x-4 gap-y-2">
+        <Filete />
+        <nav aria-label={t.pie} className="flex flex-wrap justify-center gap-x-7 gap-y-3">
           {menuPublico.map((seccion) => (
-            <Link key={seccion} href={rutaPublica(locale, seccion)} className="hover:text-foreground">
+            <Link
+              key={seccion}
+              href={rutaPublica(locale, seccion)}
+              className="eyebrow enlace-dorado pb-1 text-[0.65rem] text-night-muted hover:text-night-foreground"
+            >
               {t.menu[seccion]}
             </Link>
           ))}

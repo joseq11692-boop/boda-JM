@@ -49,41 +49,43 @@
 }
 
 /* ─── Tema: Base (web de invitados) ─────────────────────────────────────
-   Deliberadamente neutro: blanco, gris y UN color de acento. Es un punto de
-   partida para cambiarlo, no un diseño terminado.
-
-   Para darle vuestro estilo, basta con tocar estas variables (formato HSL:
-   tono saturación luminosidad). La más visible es --primary: botones, enlaces
-   activos y detalles. Comprueba el contraste si la cambias (texto blanco
-   sobre --primary debe leerse bien). */
+   "Noche en la bahía": azul noche del Pacífico, marfil y dorado champán.
+   El dorado claro (--gold) es solo decorativo (líneas, filetes, monograma);
+   el texto dorado usa --gold-ink, que sí da contraste AA sobre el marfil.
+   Las secciones oscuras (portada, pie) usan --night / --night-deep. */
 :root,
 [data-theme="base"] {
-    --background: 0 0% 100%;
-    --foreground: 220 15% 12%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 15% 12%;
-    --primary: 221 70% 42%;         /* acento: azul */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 94%;
-    --secondary-foreground: 220 15% 12%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 40%;
-    --accent: 220 14% 94%;
-    --accent-foreground: 220 15% 12%;
-    --border: 220 13% 88%;
-    --input: 220 13% 82%;
-    --ring: 221 70% 42%;
-    --gold: 221 70% 42%;
-    --gold-soft: 221 60% 80%;
+    --background: 40 33% 97%;       /* marfil */
+    --foreground: 216 45% 13%;      /* tinta azul noche */
+    --card: 40 50% 99%;
+    --card-foreground: 216 45% 13%;
+    --primary: 216 48% 15%;         /* botones: azul noche */
+    --primary-foreground: 40 33% 97%;
+    --secondary: 38 30% 92%;
+    --secondary-foreground: 216 45% 13%;
+    --muted: 38 28% 93%;
+    --muted-foreground: 216 14% 36%;
+    --accent: 38 35% 90%;
+    --accent-foreground: 216 45% 13%;
+    --border: 36 22% 83%;
+    --input: 36 18% 74%;
+    --ring: 38 45% 40%;
+    --gold: 38 42% 58%;             /* dorado champán (decoración) */
+    --gold-soft: 38 45% 82%;
+    --gold-ink: 36 52% 32%;         /* dorado para texto sobre marfil */
+    --night: 216 50% 12%;
+    --night-deep: 218 55% 7%;
+    --on-night: 40 33% 94%;
+    --on-night-muted: 38 20% 75%;
 
     --theme-mode: light;
-    --theme-primary: #2052b6;
-    --theme-primary-soft: #c7d4ef;
-    --theme-accent: #2052b6;
-    --theme-ink: #1b1e24;
-    --theme-surface: #ffffff;
-    --theme-bg: #ffffff;
-    --theme-gradient-hero: linear-gradient(#ffffff, #ffffff);
+    --theme-primary: #111f36;
+    --theme-primary-soft: #ead9b4;
+    --theme-accent: #c2a26a;
+    --theme-ink: #121f33;
+    --theme-surface: #fefdfa;
+    --theme-bg: #faf7f2;
+    --theme-gradient-hero: radial-gradient(120% 80% at 50% 0%, #1b2d4d 0%, #0f1b2e 45%, #070d18 100%);
 }
 
 /* ─── Tema: Admin (panel privado, paleta neutral) ─────────────────────── */

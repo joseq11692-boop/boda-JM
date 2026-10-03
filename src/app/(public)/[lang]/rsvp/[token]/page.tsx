@@ -114,18 +114,18 @@ export default async function RsvpPage({
   const recienGuardado = query.ok === "1";
 
   return (
-    <Pagina titulo={t.hola(guest.nombre)} intro={t.intro} locale={locale}>
+    <Pagina titulo={t.hola(guest.nombre)} antetitulo={nombresPareja} intro={t.intro} locale={locale}>
       <RsvpTracker token={token} locale={locale} />
 
       {recienGuardado ? (
-        <div role="status" className="space-y-4 rounded-md border border-primary/40 bg-primary/5 p-4">
-          <p className="font-medium">
+        <div role="status" className="space-y-4 border border-gold/60 bg-card p-6 text-center">
+          <p className="font-display text-2xl">
             {guest.confirmacion_asistencia === "rechazado" ? t.graciasNo : t.gracias}
           </p>
           {guest.confirmacion_asistencia === "confirmado" ? (
             <AddToCalendar
               title={nombresPareja}
-              description={`${d.venueName}, ${d.venueLocation}`}
+              description={d.calendarDescription}
               location={`${d.venueName}, ${d.venueMapQuery}`}
               startIso={d.eventDateTimeIso}
               endIso={d.eventEndIso}
@@ -138,8 +138,8 @@ export default async function RsvpPage({
       <ListaDatos
         items={[
           { etiqueta: tw.inicio.fecha, valor: d.dateLabel },
-          { etiqueta: tw.inicio.hora, valor: d.ceremonyTime },
-          { etiqueta: tw.inicio.lugar, valor: `${d.venueName} · ${d.venueLocation}` },
+          { etiqueta: tw.inicio.ceremonia, valor: `${d.ceremonyTime} · ${d.ceremonyMapQuery ? d.ceremonyVenue : tw.inicio.porConfirmar}` },
+          { etiqueta: tw.inicio.recepcion, valor: `${d.venueName} · ${d.venueLocation}` },
           { etiqueta: tw.inicio.confirmarAntes, valor: d.rsvpDeadline },
           { etiqueta: t.estado, valor: t.estados[guest.confirmacion_asistencia] },
           // Mesa y autobús solo cuando ya están asignados desde el panel.
