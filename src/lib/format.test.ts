@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { auditActionLabel, estadoProveedorLabel, formatPrecioProveedor, localeLabel, rsvpBadgeVariant } from "./format";
 import { buildWhatsappUrl } from "./whatsapp";
+import { moneda } from "@/config/boda";
 
 describe("formatPrecioProveedor", () => {
   it("devuelve «Sin precio aún» cuando el precio es 0", () => {
@@ -88,9 +89,9 @@ describe("buildWhatsappUrl", () => {
 
 // Referencia local para no acoplar el test al formato exacto de la locale.
 function formatCurrencyRef(value: number) {
-  return new Intl.NumberFormat("es-ES", {
+  return new Intl.NumberFormat(moneda.formato, {
     style: "currency",
-    currency: "EUR",
+    currency: moneda.codigo,
     maximumFractionDigits: 0
   }).format(value);
 }

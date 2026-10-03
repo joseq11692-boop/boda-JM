@@ -28,19 +28,32 @@ const optionalDate = z.preprocess((value) => {
   return value;
 }, z.string().nullable());
 
-// Acepta tanto "1234.56" como el formato español "1.234,56" / "50,5":
-// si hay coma, los puntos son separadores de miles y la coma es el decimal.
+// Acepta los formatos de Panamá/EE. UU. ("1,234.56", "$1,500") y de España
+// ("1.234,56 €", "50,5"). Si aparecen punto y coma, el último es el decimal.
+// Si solo hay comas seguidas de grupos de tres cifras ("1,500"), son miles;
+// si no ("50,5"), la coma es el decimal.
+export function parseImporte(value: string) {
+  let text = value.trim().replace(/(US\$|B\/\.|[$€\s])/g, "");
+  const ultimaComa = text.lastIndexOf(",");
+  const ultimoPunto = text.lastIndexOf(".");
+
+  if (ultimaComa !== -1 && ultimoPunto !== -1) {
+    text = ultimaComa > ultimoPunto
+      ? text.replace(/\./g, "").replace(",", ".")
+      : text.replace(/,/g, "");
+  } else if (ultimaComa !== -1) {
+    text = /^\d{1,3}(,\d{3})+$/.test(text) ? text.replace(/,/g, "") : text.replace(",", ".");
+  }
+
+  return Number(text);
+}
+
 const money = z.preprocess((value) => {
   if (typeof value !== "string" || value.trim() === "") {
     return 0;
   }
 
-  let text = value.trim().replace(/[€\s]/g, "");
-  if (text.includes(",")) {
-    text = text.replace(/\./g, "").replace(",", ".");
-  }
-
-  return Number(text);
+  return parseImporte(value);
 }, z.number().finite().min(0));
 
 // Acepta el "on" de los formularios HTML, el "true" textual, y booleanos ya

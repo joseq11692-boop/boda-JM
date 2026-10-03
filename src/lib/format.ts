@@ -1,8 +1,9 @@
+import { moneda } from "@/config/boda";
 import type { AuditAction, RsvpStatus, SupplierStatus } from "@/lib/types";
 
-export const currencyFormatter = new Intl.NumberFormat("es-ES", {
+export const currencyFormatter = new Intl.NumberFormat(moneda.formato, {
   style: "currency",
-  currency: "EUR",
+  currency: moneda.codigo,
   maximumFractionDigits: 0
 });
 

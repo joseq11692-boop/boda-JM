@@ -65,6 +65,12 @@ describe("budgetSchema costes (money)", () => {
     expect(r.coste_estimado).toBe(1234.56);
   });
 
+  it("acepta el formato de Panamá con miles y símbolo $", () => {
+    expect(budgetSchema.parse({ ...budgetBase, coste_estimado: "$1,234.56", coste_real: "0" }).coste_estimado).toBe(1234.56);
+    expect(budgetSchema.parse({ ...budgetBase, coste_estimado: "12,500", coste_real: "0" }).coste_estimado).toBe(12500);
+    expect(budgetSchema.parse({ ...budgetBase, coste_estimado: "US$ 3,000", coste_real: "0" }).coste_estimado).toBe(3000);
+  });
+
   it("vacío se convierte en 0", () => {
     const r = budgetSchema.parse({ ...budgetBase, coste_estimado: "", coste_real: "" });
     expect(r.coste_estimado).toBe(0);

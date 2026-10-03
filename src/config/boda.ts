@@ -77,6 +77,12 @@ export const ceremonia: { nombre: string; direccionMapa: string | null } = {
   direccionMapa: null
 };
 
+/**
+ * Moneda del presupuesto, proveedores y catering del panel. En Panamá se usa
+ * el dólar; con "es-US" las cifras salen como $12,345.
+ */
+export const moneda = { codigo: "USD", formato: "es-US" } as const;
+
 /** Horario del día (formato HH:MM, 24 h; la web lo muestra como 7:00 p. m.). */
 export const horario = {
   ceremonia: "19:00",

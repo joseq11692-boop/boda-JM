@@ -12,7 +12,7 @@ import {
   ChefHat,
   CheckCircle2,
   Clock3,
-  Euro,
+  DollarSign,
   FileText,
   Heart,
   Hourglass,
@@ -341,7 +341,7 @@ export default async function DashboardPage() {
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               <StatCard icon={Camera} value={photoQuoted.length} label="Cotizados" note="con presupuesto" />
               <StatCard
-                icon={Euro}
+                icon={DollarSign}
                 value={formatPrecioProveedor(photoBestPrice)}
                 label="Mejor precio"
                 tone="success"
@@ -364,7 +364,7 @@ export default async function DashboardPage() {
           tone="success"
         />
         <StatCard icon={Clock3} value={summary.invitados_pendientes} label="Pendientes" tone="warning" />
-        <StatCard icon={Euro} value={formatCurrency(summary.presupuesto_previsto)} label="Presupuesto previsto" />
+        <StatCard icon={DollarSign} value={formatCurrency(summary.presupuesto_previsto)} label="Presupuesto previsto" />
         <StatCard
           icon={WalletCards}
           value={formatCurrency(summary.presupuesto_gastado)}
