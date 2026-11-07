@@ -53,6 +53,10 @@ const config: Config = {
           soft: "hsl(var(--gold-soft))",
           ink: "hsl(var(--gold-ink))"
         },
+        olive: {
+          DEFAULT: "hsl(var(--olive))",
+          foreground: "hsl(var(--on-olive))"
+        },
         night: {
           DEFAULT: "hsl(var(--night))",
           deep: "hsl(var(--night-deep))",

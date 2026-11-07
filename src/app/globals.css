@@ -24,39 +24,46 @@
     --font-display: var(--font-sans);
   }
 
-  /* Web de invitados: Cormorant Garamond (títulos) y Jost (texto), cargadas
-     con next/font en src/app/layout.tsx. */
+  /* Web de invitados: Pinyon Script (nombres), Bodoni Moda cursiva (títulos)
+     e Instrument Sans (texto), cargadas con next/font en src/app/layout.tsx. */
   .web-boda {
-    --font-display: var(--font-boda-serif), "Cormorant Garamond", Georgia, serif;
-    --font-sans: var(--font-boda-sans), "Jost", ui-sans-serif, system-ui, sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.01em;
+    --font-display: var(--font-boda-serif), "Bodoni Moda", Didot, Georgia, serif;
+    --font-sans: var(--font-boda-sans), "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-script: var(--font-boda-script), "Pinyon Script", cursive;
+    font-weight: 400;
   }
 
   .web-boda .font-display {
-    font-feature-settings: "liga", "dlig";
+    font-style: italic;
+    font-weight: 400;
   }
 
-  /* Formularios de la web de invitados (RSVP): esquinas rectas, filetes
-     dorados y botones en versalitas. El panel conserva su estilo. */
+  .web-boda .font-script {
+    font-family: var(--font-script);
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  /* Formularios de la web de invitados (RSVP): bordes oliva, esquinas
+     suaves y botones en mayúsculas espaciadas. El panel conserva su estilo. */
   .web-boda :is(input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]), textarea, select) {
-    border-radius: 0;
-    border-color: hsl(var(--gold) / 0.55);
+    border-radius: 0.375rem;
+    border-color: hsl(var(--gold));
     background-color: hsl(var(--card));
     font-size: 1rem;
   }
   .web-boda :is(input, textarea, select):focus-visible {
-    outline: 1px solid hsl(var(--gold-ink));
+    outline: 2px solid hsl(var(--primary));
     outline-offset: 0;
     box-shadow: none;
   }
   .web-boda form :is(button[type="submit"], button[type="button"]) {
-    height: 3rem;
-    border-radius: 0;
-    padding-inline: 2rem;
-    font-weight: 400;
-    font-size: 0.68rem;
-    letter-spacing: 0.32em;
+    height: 2.875rem;
+    border-radius: 0.375rem;
+    padding-inline: 1.75rem;
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
   }
   .web-boda form label {
@@ -67,10 +74,6 @@
     font-family: var(--font-display);
     font-size: 1.25rem;
   }
-  .web-boda :is(.rounded-md, .rounded-xl) {
-    border-radius: 0;
-  }
-
   .web-boda ::selection {
     background: hsl(var(--gold) / 0.35);
   }
@@ -240,14 +243,25 @@
     text-transform: uppercase;
   }
 
-  /* Fondo nocturno de la portada y el pie: cielo de la bahía con un
-     resplandor cálido abajo, como las luces de la ciudad sobre el agua. */
+  /* Banda vino (portada, cabecera, pie), plana como en la invitación. */
   .cielo-noche {
-    background:
-      radial-gradient(60% 45% at 50% 108%, hsl(38 60% 55% / 0.22) 0%, transparent 70%),
-      radial-gradient(90% 60% at 50% -10%, hsl(214 45% 28% / 0.9) 0%, transparent 70%),
-      linear-gradient(180deg, hsl(var(--night)) 0%, hsl(var(--night-deep)) 100%);
+    background: hsl(var(--night));
     color: hsl(var(--on-night));
+  }
+
+  /* Banda verde oliva. */
+  .banda-oliva {
+    background: hsl(var(--olive));
+    color: hsl(var(--on-olive));
+  }
+
+  /* Terciopelo que rodea la columna de la invitación en pantallas anchas:
+     vino oscuro que se aclara hacia la derecha, con grano. */
+  .terciopelo {
+    background:
+      radial-gradient(70% 60% at 85% 40%, hsl(var(--velvet-light) / 0.9) 0%, transparent 70%),
+      radial-gradient(60% 50% at 20% 85%, hsl(335 40% 30% / 0.8) 0%, transparent 70%),
+      linear-gradient(100deg, hsl(var(--velvet)) 0%, hsl(338 34% 26%) 45%, hsl(var(--velvet-light)) 100%);
   }
 
   /* Grano muy fino encima de los fondos lisos, para que no parezcan planos. */
@@ -261,7 +275,7 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.06;
+    opacity: var(--grano, 0.06);
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   }
 

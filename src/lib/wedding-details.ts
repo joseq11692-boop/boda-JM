@@ -14,6 +14,7 @@ type Details = {
   ceremonyMapQuery: string | null;
   receptionTime: string;
   city: string;
+  venueHall: string;
   venueName: string;
   venueLocation: string;
   venueLabel: string;
@@ -95,6 +96,7 @@ function buildDetails(locale: WeddingLocale): Details {
     ceremonyMapQuery: ceremonia.direccionMapa,
     receptionTime: formatHora(horario.recepcion),
     city: t.ciudad,
+    venueHall: evento.lugar.salon,
     venueName: evento.lugar.nombre,
     venueLocation: evento.lugar.ciudad,
     venueLabel: evento.lugar.nombre,
@@ -109,7 +111,7 @@ function buildDetails(locale: WeddingLocale): Details {
     transportCopy: t.transporteTexto,
     dressCode: t.vestimenta,
     dressCodeDetail: t.vestimentaDetalle,
-    calendarDescription: `${formatHora(horario.ceremonia)} · ${ceremonia.nombre}. ${formatHora(horario.recepcion)} · ${evento.lugar.nombre}, ${evento.lugar.ciudad}.`,
+    calendarDescription: `${formatHora(horario.ceremonia)} · ${ceremonia.nombre}. ${formatHora(horario.recepcion)} · ${evento.lugar.salon}, ${evento.lugar.nombre}, ${evento.lugar.ciudad}.`,
     rsvpDeadline: formatDate(evento.rsvpLimiteIso, locale),
     rsvpNote: t.notaRsvp
   };

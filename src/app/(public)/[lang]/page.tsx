@@ -1,10 +1,11 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { evento, nombresCompletos, nombresPareja, pareja, textos } from "@/config/boda";
+import { evento, nombresCompletos, nombresCortos, nombresPareja, pareja, textos } from "@/config/boda";
 import { AddToCalendar } from "@/components/add-to-calendar";
-import { Filete, Monograma, SkylineBahia } from "@/components/publico/adornos";
+import { Filete, Monograma, SelloLacre, Sobre } from "@/components/publico/adornos";
 import { CuentaAtras } from "@/components/publico/cuenta-atras";
-import { claseBotonClaro, claseBotonDorado } from "@/components/publico/pagina";
+import { claseBotonDorado } from "@/components/publico/pagina";
 import { resolveLocale } from "@/lib/locale";
 import { rutaPublica, textosWeb } from "@/lib/textos-web";
 import { getWeddingDetails } from "@/lib/wedding-details";
@@ -42,6 +43,12 @@ function EventJsonLd({ descripcion }: { descripcion: string }) {
 
 const retraso = (ms: number) => ({ "--retraso": `${ms}ms` }) as CSSProperties;
 
+/** "27.02.2027" a partir de la fecha ISO de la boda. */
+function fechaConPuntos(iso: string) {
+  const [anio, mes, dia] = iso.slice(0, 10).split("-");
+  return `${dia}.${mes}.${anio}`;
+}
+
 export default async function Inicio({
   params,
   searchParams
@@ -55,147 +62,108 @@ export default async function Inicio({
   const d = getWeddingDetails(locale);
   const t = textosWeb[locale];
   const texto = textos[locale];
-  const [diaSemana, ...restoFecha] = d.dateLabel.split(", ");
-
-  const momentos = [
-    {
-      numero: "I",
-      titulo: t.inicio.ceremonia,
-      hora: d.ceremonyTime,
-      lugar: d.ceremonyMapQuery ? d.ceremonyVenue : t.inicio.porConfirmar,
-      detalle: d.ceremonyMapQuery ? d.ceremonyMapQuery : d.city
-    },
-    {
-      numero: "II",
-      titulo: t.inicio.recepcion,
-      hora: t.inicio.aContinuacion,
-      lugar: d.venueName,
-      detalle: d.venueLocation
-    }
-  ];
 
   return (
     <main id="main" lang={locale}>
       <EventJsonLd descripcion={texto.descripcionSeo} />
 
-      {/* ─── Portada nocturna ─── */}
-      <section className="cielo-noche grano relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden">
-        <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col items-center justify-center px-4 pb-10 pt-14 text-center sm:px-6">
+      {/* ─── Portada: foto con los nombres en caligrafía, enmarcada en vino ─── */}
+      <section className="bg-[hsl(var(--night-deep))] px-3 pt-0 sm:px-4">
+        <div className="relative isolate flex aspect-[4/3] min-h-[22rem] w-full flex-col items-center justify-center overflow-hidden text-center text-white sm:aspect-[2/1.05]">
+          <Image src="/fotos/portada.jpg" alt="" fill priority sizes="(max-width: 640px) 100vw, 640px" className="-z-20 object-cover" />
+          <span aria-hidden className="absolute inset-0 -z-10 bg-black/25" />
+
           {estado === "en-preparacion" ? (
-            <p role="status" className="mb-10 border border-gold/40 px-5 py-3 text-sm text-night-foreground">
+            <p role="status" className="mx-4 mb-4 rounded-md bg-black/50 px-4 py-2 text-sm">
               {t.inicio.preparacion}
             </p>
           ) : null}
 
-          <Monograma tamano={96} className="aparecer" />
-
-          <p className="eyebrow aparecer mt-10 text-gold" style={retraso(150)}>
-            {texto.antetitulo}
-          </p>
-
-          <h1
-            className="aparecer mt-6 font-display text-[clamp(2.9rem,9vw,6.75rem)] font-light leading-[0.95] tracking-tight"
-            style={retraso(300)}
-          >
-            <span className="block">{pareja.uno}</span>{" "}
-            <span className="my-2 block font-normal italic text-gold sm:my-3">&amp;</span>{" "}
-            <span className="block">{pareja.dos}</span>
+          {/* El h1 lleva los nombres completos; la caligrafía es la versión visual. */}
+          <h1 className="sr-only">
+            {pareja.uno} &amp; {pareja.dos}
           </h1>
-
-          <div className="aparecer mt-10 flex items-center gap-4 sm:gap-6" style={retraso(450)}>
-            <span aria-hidden className="hidden h-px w-16 bg-gold/60 sm:block" />
-            <p className="eyebrow text-night-foreground">
-              {diaSemana}
-              <span aria-hidden className="mx-3 text-gold">
-                ·
-              </span>
-              <span className="sr-only">, </span>
-              {restoFecha.join(", ")}
-            </p>
-            <span aria-hidden className="hidden h-px w-16 bg-gold/60 sm:block" />
-          </div>
-          <p className="aparecer mt-3 font-display text-lg italic text-night-muted" style={retraso(500)}>
-            {d.city}
+          <p aria-hidden className="aparecer font-script leading-[0.8] drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]">
+            <span className="block -translate-x-[18%] -rotate-[8deg] text-[clamp(4rem,15vw,5.75rem)]">{nombresCortos.uno}</span>
+            <span className="block translate-x-[12%] -rotate-[8deg] text-[clamp(4rem,15vw,5.75rem)]">
+              <span className="text-[0.75em]">&amp;</span>
+              {nombresCortos.dos}
+            </span>
           </p>
-
-          <div className="aparecer mt-12" style={retraso(650)}>
-            <CuentaAtras fechaIso={d.eventDateTimeIso} locale={locale} />
-          </div>
-
-          <Link href={rutaPublica(locale, "rsvp")} className={`aparecer mt-12 ${claseBotonDorado}`} style={retraso(800)}>
-            {t.inicio.confirmar}
-          </Link>
+          <Filete className="aparecer mt-3 text-white/85" />
+          <p className="aparecer mt-8 text-[0.68rem] uppercase tracking-[0.24em] text-white/90" style={retraso(200)}>
+            {d.dateShort}
+          </p>
         </div>
-
-        <SkylineBahia className="h-32 sm:h-44" />
       </section>
 
-      {/* ─── Invitación ─── */}
-      <section className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6 sm:py-32">
-        <Filete />
-        <h2 className="eyebrow mt-8 text-gold-ink">{t.inicio.invitacionTitulo}</h2>
-        <p className="mt-8 font-display text-2xl font-light italic leading-relaxed sm:text-3xl sm:leading-relaxed">
-          {texto.bienvenida}
+      {/* ─── ¡nos casamos! ─── */}
+      <section className="cielo-noche px-6 pb-16 pt-14 text-center sm:px-14">
+        <h2 className="font-display text-[1.65rem]">{t.inicio.nosCasamos}</h2>
+        <p className="mx-auto mt-6 max-w-md text-[0.9rem] leading-7 text-night-muted">{texto.bienvenida}</p>
+        <p className="mx-auto mt-5 max-w-md text-[0.9rem] leading-7 text-night-muted">
+          {nombresCompletos.uno} &amp; {nombresCompletos.dos}
         </p>
-        <p className="mt-12 font-display text-xl tracking-wide sm:text-2xl">
-          {nombresCompletos.uno}
-          <span className="mx-3 block font-normal italic text-gold-ink sm:inline">&amp;</span>
-          {nombresCompletos.dos}
-        </p>
-      </section>
-
-      {/* ─── El gran día ─── */}
-      <section aria-labelledby="gran-dia" className="border-y border-gold/30 bg-card">
-        <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-24">
-          <h2 id="gran-dia" className="text-center font-display text-4xl font-light sm:text-5xl">
-            {t.inicio.elGranDia}
-          </h2>
-          <p className="eyebrow mt-4 text-center text-gold-ink">{d.dateLabel}</p>
-
-          <ol className="mt-16 grid gap-12 md:grid-cols-2 md:gap-0 md:divide-x md:divide-gold/30">
-            {momentos.map((momento) => (
-              <li key={momento.numero} className="flex flex-col items-center px-6 text-center">
-                <span aria-hidden className="font-display text-2xl italic text-gold-ink">
-                  {momento.numero}
-                </span>
-                <h3 className="mt-4 font-display text-3xl font-light">{momento.titulo}</h3>
-                <p className="eyebrow mt-5 text-gold-ink">{momento.hora}</p>
-                <p className="mt-5 font-display text-2xl">{momento.lugar}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{momento.detalle}</p>
-              </li>
-            ))}
-          </ol>
-
-          <div className="mt-14 flex justify-center">
-            <Link href={rutaPublica(locale, "mapa")} className={claseBotonClaro}>
-              {t.inicio.verMapa}
-            </Link>
-          </div>
+        <Monograma tamano={46} className="mt-10 text-night-muted" />
+        <div className="mt-8">
+          <CuentaAtras fechaIso={d.eventDateTimeIso} locale={locale} />
         </div>
       </section>
 
       {/* ─── Detalles ─── */}
-      <section aria-labelledby="detalles" className="mx-auto max-w-5xl px-4 py-24 sm:px-6">
-        <h2 id="detalles" className="sr-only">
+      <section aria-labelledby="detalles" className="px-5 pb-14 pt-14 text-center sm:px-8">
+        <h2 id="detalles" className="font-display text-[1.65rem] text-primary">
           {t.inicio.detalles}
         </h2>
-        <dl className="grid gap-12 text-center md:grid-cols-3">
+        <dl className="mt-10 grid gap-10 text-gold-ink min-[480px]:grid-cols-3 min-[480px]:gap-4">
           <div>
-            <dt className="eyebrow text-gold-ink">{t.inicio.fecha}</dt>
-            <dd className="mt-4 font-display text-2xl">{d.dateLabel}</dd>
-            <dd className="mt-1 text-muted-foreground">{d.ceremonyTime}</dd>
+            <dt className="font-display text-[1.35rem]">{t.inicio.elGranDia}</dt>
+            <dd className="mt-4 text-[1.05rem]">{fechaConPuntos(evento.inicioIso)}</dd>
+            <dd className="mt-5 text-[1.05rem] uppercase">{d.ceremonyTime.replace(" p. m.", " PM").replace(" a. m.", " AM")}</dd>
           </div>
           <div>
-            <dt className="eyebrow text-gold-ink">{t.inicio.vestimenta}</dt>
-            <dd className="mt-4 font-display text-2xl">{d.dressCode}</dd>
-            <dd className="mx-auto mt-2 max-w-xs text-[0.95rem] leading-7 text-muted-foreground">{d.dressCodeDetail}</dd>
+            <dt className="font-display text-[1.35rem]">{t.inicio.laCeremonia}</dt>
+            <dd className="mt-4 text-[1.05rem] leading-snug">{d.ceremonyMapQuery ? d.ceremonyVenue : t.inicio.porConfirmar}</dd>
           </div>
           <div>
-            <dt className="eyebrow text-gold-ink">{t.inicio.confirmarAntes}</dt>
-            <dd className="mt-4 font-display text-2xl">{d.rsvpDeadline}</dd>
+            <dt className="font-display text-[1.35rem]">{t.inicio.laFiesta}</dt>
+            <dd className="mt-4 text-[1.05rem] leading-snug">
+              {d.venueHall}
+              <br />
+              {d.venueName}
+              <br />
+              {d.venueLocation}
+            </dd>
           </div>
         </dl>
-        <div className="mt-14 flex justify-center text-center [&>p]:justify-center">
+        <Filete className="mt-10 text-gold-ink" />
+        <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+          <Link href={rutaPublica(locale, "mapa")} className="text-primary underline decoration-gold underline-offset-4 hover:decoration-primary">
+            {t.inicio.verMapa}
+          </Link>
+          <Link href={rutaPublica(locale, "agenda")} className="text-primary underline decoration-gold underline-offset-4 hover:decoration-primary">
+            {t.menu.agenda}
+          </Link>
+        </div>
+      </section>
+
+      {/* ─── Confirma tu asistencia: el sobre con el sello ─── */}
+      <Sobre className="flex flex-col items-center px-6 pb-12 pt-14 text-center">
+        <h2 className="font-display text-[1.75rem] text-[#e4e2cf]">{t.inicio.confirmaTitulo}</h2>
+        <SelloLacre className="mt-8 w-44 sm:w-52" />
+        <Link href={rutaPublica(locale, "rsvp")} className={`mt-8 ${claseBotonDorado} h-9 px-4`}>
+          {t.inicio.clickAqui}
+        </Link>
+        <p className="mt-4 text-xs text-[#d9d7c0]">{t.inicio.nosAcompanasTexto(d.rsvpDeadline)}</p>
+      </Sobre>
+
+      {/* ─── Banda oliva: vestimenta y calendario ─── */}
+      <section className="banda-oliva px-6 pb-16 pt-14 text-center sm:px-14">
+        <h2 className="font-display text-[1.65rem]">{t.inicio.vestimentaTitulo}</h2>
+        <p className="mt-5 text-lg">{d.dressCode}</p>
+        <p className="mx-auto mt-3 max-w-md text-[0.9rem] leading-7 opacity-85">{d.dressCodeDetail}</p>
+        <Monograma tamano={46} className="mt-10 opacity-80" />
+        <div className="mt-8 flex justify-center text-center text-olive-foreground [&>p]:justify-center [&_a]:text-olive-foreground [&_button]:text-olive-foreground [&_span]:text-olive-foreground/80">
           <AddToCalendar
             title={nombresPareja}
             description={d.calendarDescription}
@@ -207,31 +175,12 @@ export default async function Inicio({
         </div>
       </section>
 
-      {/* ─── Confirmación ─── */}
-      <section className="px-4 sm:px-6">
-        <div className="cielo-noche grano mx-auto max-w-5xl px-6 py-20 text-center sm:py-24">
-          <Monograma tamano={56} />
-          <h2 className="mt-8 font-display text-4xl font-light sm:text-5xl">{t.inicio.nosAcompanas}</h2>
-          <p className="mx-auto mt-5 max-w-md font-display text-xl italic text-night-muted">
-            {t.inicio.nosAcompanasTexto(d.rsvpDeadline)}
-          </p>
-          <Link href={rutaPublica(locale, "rsvp")} className={`mt-10 ${claseBotonDorado}`}>
-            {t.inicio.confirmar}
-          </Link>
-        </div>
+      {/* ─── ¡Te esperamos! ─── */}
+      <section className="relative isolate flex aspect-[2.3/1] min-h-[15rem] w-full items-start justify-center overflow-hidden pt-[9%]">
+        <Image src="/fotos/final.jpg" alt="" fill sizes="(max-width: 640px) 100vw, 640px" className="-z-20 object-cover" />
+        <span aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-black/30 to-transparent" />
+        <p className="font-display text-[1.9rem] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">{t.inicio.teEsperamos}</p>
       </section>
-
-      <nav aria-label={t.inicio.masInfo} className="mx-auto mt-16 max-w-5xl px-4 sm:px-6">
-        <ul className="flex flex-wrap justify-center gap-x-8 gap-y-3">
-          {(["agenda", "informacion", "regalo"] as const).map((seccion) => (
-            <li key={seccion}>
-              <Link href={rutaPublica(locale, seccion)} className="eyebrow enlace-dorado pb-1 text-gold-ink">
-                {t.menu[seccion]}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
     </main>
   );
 }

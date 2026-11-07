@@ -13,18 +13,22 @@ import "@/styles/tokens.css";
 
 // Tipografía de la web de invitados (archivos en src/fonts, licencia OFL).
 // Solo se aplica dentro de .web-boda (ver globals.css): el panel conserva su letra.
+const script = localFont({
+  src: "../fonts/pinyon-script.woff2",
+  weight: "400",
+  variable: "--font-boda-script",
+  display: "swap",
+  fallback: ["cursive"]
+});
 const serif = localFont({
-  src: [
-    { path: "../fonts/cormorant-garamond.woff2", weight: "300 700", style: "normal" },
-    { path: "../fonts/cormorant-garamond-italic.woff2", weight: "300 700", style: "italic" }
-  ],
+  src: [{ path: "../fonts/bodoni-moda-italic.woff2", weight: "400 900", style: "italic" }],
   variable: "--font-boda-serif",
   display: "swap",
-  fallback: ["Georgia", "serif"]
+  fallback: ["Didot", "Georgia", "serif"]
 });
 const sans = localFont({
-  src: "../fonts/jost.woff2",
-  weight: "100 900",
+  src: "../fonts/instrument-sans.woff2",
+  weight: "400 700",
   variable: "--font-boda-sans",
   display: "swap",
   fallback: ["system-ui", "sans-serif"]
@@ -32,8 +36,8 @@ const sans = localFont({
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf7f2" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f1b2e" }
+    { media: "(prefers-color-scheme: light)", color: "#5a1a34" },
+    { media: "(prefers-color-scheme: dark)", color: "#4c182d" }
   ],
   width: "device-width",
   initialScale: 1,
@@ -80,7 +84,7 @@ export default function RootLayout({
   // páginas en el servidor en cada visita. El idioma viaja en la URL y el
   // panel pone su propio tema en su contenedor.
   return (
-    <html lang="es" data-theme={DEFAULT_THEME} className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
+    <html lang="es" data-theme={DEFAULT_THEME} className={`${script.variable} ${serif.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
         <ThemeNoFlashScript />
       </head>

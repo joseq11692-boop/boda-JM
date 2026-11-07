@@ -28,7 +28,7 @@ export function CuentaAtras({ fechaIso, locale }: { fechaIso: string; locale: We
   const t = textosWeb[locale].inicio;
 
   if (restante !== null && restante <= 0) {
-    return <p className="eyebrow text-gold">{t.hoy}</p>;
+    return <p className="font-display text-xl">{t.hoy}</p>;
   }
 
   const valores =
@@ -46,16 +46,13 @@ export function CuentaAtras({ fechaIso, locale }: { fechaIso: string; locale: We
     <div role="group" aria-label={t.cuentaAtras}>
       {/* Para lectores de pantalla, solo los días: los segundos serían ruido. */}
       {valores ? <p className="sr-only">{t.faltan(valores[0])}</p> : null}
-      <ol aria-hidden className="flex items-start justify-center">
+      <ol aria-hidden className="flex items-start justify-center gap-7 sm:gap-10">
         {etiquetas.map((etiqueta, i) => (
-          <li key={etiqueta} className="flex items-start">
-            {i > 0 ? <span className="mx-3 mt-2 h-8 w-px bg-gold/40 sm:mx-6 sm:h-10" /> : null}
-            <span className="flex min-w-[3.25rem] flex-col items-center sm:min-w-[4.5rem]">
-              <span className="font-display text-4xl font-light tabular-nums leading-none sm:text-5xl">
-                {valores ? String(valores[i]).padStart(i === 0 ? 1 : 2, "0") : "–"}
-              </span>
-              <span className="eyebrow mt-3 text-[0.6rem] text-night-muted">{etiqueta}</span>
+          <li key={etiqueta} className="flex min-w-[2.75rem] flex-col items-center">
+            <span className="text-[1.75rem] font-normal tabular-nums leading-none tracking-tight">
+              {valores ? String(valores[i]).padStart(i === 0 ? 1 : 2, "0") : "–"}
             </span>
+            <span className="mt-2 font-display text-[0.8rem] lowercase text-night-muted">{etiqueta}</span>
           </li>
         ))}
       </ol>

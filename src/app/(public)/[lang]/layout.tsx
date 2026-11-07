@@ -59,7 +59,9 @@ export default async function PublicLayout({
   }
 
   return (
-    <div lang={lang} className="web-boda flex min-h-screen flex-col bg-background font-sans">
+    // La invitación es una columna estrecha sobre terciopelo vino, como la
+    // tarjeta impresa sobre un mantel. En el móvil ocupa todo el ancho.
+    <div lang={lang} className="web-boda terciopelo grano min-h-screen font-sans" style={{ ["--grano" as string]: "0.12" }}>
       {/* El <html> lo pinta el layout raíz, que es estático y no conoce el
           idioma de la rama. Este script corrige el atributo antes del primer
           pintado para que lectores de pantalla y buscadores lo vean bien. */}
@@ -67,9 +69,11 @@ export default async function PublicLayout({
       <a href="#main" className="sr-only sr-only-focusable">
         {textosWeb[lang].saltarContenido}
       </a>
-      <Cabecera locale={lang} />
-      <div className="flex-1">{children}</div>
-      <Pie locale={lang} />
+      <div className="mx-auto flex min-h-screen w-full max-w-[40rem] flex-col bg-background text-foreground shadow-[0_0_90px_rgba(15,3,8,0.55)]">
+        <Cabecera locale={lang} />
+        <div className="flex-1">{children}</div>
+        <Pie locale={lang} />
+      </div>
     </div>
   );
 }

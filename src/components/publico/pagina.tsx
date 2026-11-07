@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Filete } from "@/components/publico/adornos";
 import { cn } from "@/lib/utils";
 
@@ -20,18 +20,14 @@ export function Pagina({
   className?: string;
 }) {
   return (
-    <main id="main" lang={locale} className={cn("mx-auto w-full max-w-3xl px-4 pt-16 sm:px-6 sm:pt-24", className)}>
+    <main id="main" lang={locale} className={cn("w-full px-5 pb-20 pt-14 sm:px-10", className)}>
       <header className="aparecer text-center">
-        {antetitulo ? <p className="eyebrow mb-5 text-gold-ink">{antetitulo}</p> : null}
-        <h1 className="font-display text-5xl font-light tracking-tight sm:text-6xl">{titulo}</h1>
-        <Filete className="mt-7" />
-        {intro ? (
-          <p className="mx-auto mt-7 max-w-xl font-display text-xl italic leading-relaxed text-muted-foreground sm:text-2xl">
-            {intro}
-          </p>
-        ) : null}
+        {antetitulo ? <p className="mb-4 text-[0.7rem] uppercase tracking-[0.22em] text-gold-ink">{antetitulo}</p> : null}
+        <h1 className="font-display text-[2.6rem] leading-tight text-primary">{titulo}</h1>
+        <Filete className="mt-5 text-gold" />
+        {intro ? <p className="mx-auto mt-6 max-w-md text-[0.95rem] leading-7 text-muted-foreground">{intro}</p> : null}
       </header>
-      <div className="aparecer mt-14 space-y-14" style={{ "--retraso": "150ms" } as React.CSSProperties}>
+      <div className="aparecer mt-12 space-y-12" style={{ "--retraso": "150ms" } as CSSProperties}>
         {children}
       </div>
     </main>
@@ -41,11 +37,8 @@ export function Pagina({
 /** Bloque con subtítulo dentro de una página. */
 export function Bloque({ titulo, children }: { titulo: string; children: ReactNode }) {
   return (
-    <section className="space-y-6">
-      <h2 className="flex items-center gap-4 font-display text-3xl font-light">
-        {titulo}
-        <span aria-hidden className="h-px flex-1 bg-gradient-to-r from-gold/60 to-transparent" />
-      </h2>
+    <section className="space-y-5">
+      <h2 className="text-center font-display text-[1.9rem] text-primary">{titulo}</h2>
       {children}
     </section>
   );
@@ -54,20 +47,21 @@ export function Bloque({ titulo, children }: { titulo: string; children: ReactNo
 /** Lista de pares etiqueta/valor (fecha, lugar, hora...). */
 export function ListaDatos({ items }: { items: Array<{ etiqueta: string; valor: ReactNode }> }) {
   return (
-    <dl className="divide-y divide-gold/20 border-y border-gold/40">
+    <dl className="divide-y divide-gold/40 border-y border-gold/60">
       {items.map((item) => (
-        <div key={item.etiqueta} className="grid gap-1 py-5 sm:grid-cols-[12rem_1fr] sm:items-baseline sm:gap-6">
-          <dt className="eyebrow text-[0.65rem] text-gold-ink">{item.etiqueta}</dt>
-          <dd className="font-display text-xl">{item.valor}</dd>
+        <div key={item.etiqueta} className="grid gap-1 py-4 text-center">
+          <dt className="font-display text-lg text-gold-ink">{item.etiqueta}</dt>
+          <dd className="text-base">{item.valor}</dd>
         </div>
       ))}
     </dl>
   );
 }
 
-/** Botón-enlace de la web de invitados (versalitas, esquinas rectas). */
+/** Botones-enlace de la web de invitados. */
 export const claseBoton =
-  "eyebrow inline-flex h-12 items-center justify-center gap-2 border px-8 text-[0.68rem] transition-colors duration-300";
-export const claseBotonOscuro = cn(claseBoton, "border-primary bg-primary text-primary-foreground hover:bg-transparent hover:text-primary");
-export const claseBotonClaro = cn(claseBoton, "border-gold-ink/60 text-foreground hover:border-primary hover:bg-primary hover:text-primary-foreground");
-export const claseBotonDorado = cn(claseBoton, "border-gold bg-gold text-night-deep hover:bg-transparent hover:text-gold");
+  "inline-flex h-11 items-center justify-center gap-2 rounded-md px-6 text-[0.72rem] font-medium uppercase tracking-[0.12em] transition-colors duration-300";
+export const claseBotonOscuro = cn(claseBoton, "bg-primary text-primary-foreground hover:bg-primary/90");
+export const claseBotonClaro = cn(claseBoton, "border border-gold-ink/50 text-gold-ink hover:border-primary hover:bg-primary hover:text-primary-foreground");
+/** El botón marfil de la invitación ("CLICK AQUÍ"), para fondos vino u oliva. */
+export const claseBotonDorado = cn(claseBoton, "bg-[#efeae2] text-[#474431] shadow-sm hover:bg-white");

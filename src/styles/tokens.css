@@ -49,43 +49,48 @@
 }
 
 /* ─── Tema: Base (web de invitados) ─────────────────────────────────────
-   "Noche en la bahía": azul noche del Pacífico, marfil y dorado champán.
-   El dorado claro (--gold) es solo decorativo (líneas, filetes, monograma);
-   el texto dorado usa --gold-ink, que sí da contraste AA sobre el marfil.
-   Las secciones oscuras (portada, pie) usan --night / --night-deep. */
+   Vino, marfil y oliva, tomados de la invitación de la pareja.
+   Los nombres "gold" y "night" se conservan por compatibilidad con los
+   componentes: --night es el vino de las bandas oscuras, --gold el oliva
+   claro de líneas y adornos sobre marfil, --gold-ink el oliva de texto
+   (contraste AA sobre marfil) y --on-night el rosa empolvado sobre vino. */
 :root,
 [data-theme="base"] {
-    --background: 40 33% 97%;       /* marfil */
-    --foreground: 216 45% 13%;      /* tinta azul noche */
-    --card: 40 50% 99%;
-    --card-foreground: 216 45% 13%;
-    --primary: 216 48% 15%;         /* botones: azul noche */
-    --primary-foreground: 40 33% 97%;
-    --secondary: 38 30% 92%;
-    --secondary-foreground: 216 45% 13%;
-    --muted: 38 28% 93%;
-    --muted-foreground: 216 14% 36%;
-    --accent: 38 35% 90%;
-    --accent-foreground: 216 45% 13%;
-    --border: 36 22% 83%;
-    --input: 36 18% 74%;
-    --ring: 38 45% 40%;
-    --gold: 38 42% 58%;             /* dorado champán (decoración) */
-    --gold-soft: 38 45% 82%;
-    --gold-ink: 36 52% 32%;         /* dorado para texto sobre marfil */
-    --night: 216 50% 12%;
-    --night-deep: 218 55% 7%;
-    --on-night: 40 33% 94%;
-    --on-night-muted: 38 20% 75%;
+    --background: 41 22% 89%;       /* marfil #eae6dd */
+    --foreground: 52 22% 20%;       /* oliva muy oscuro, texto */
+    --card: 40 30% 93%;
+    --card-foreground: 52 22% 20%;
+    --primary: 335 55% 23%;         /* vino #5a1a34 */
+    --primary-foreground: 41 22% 92%;
+    --secondary: 41 18% 84%;
+    --secondary-foreground: 52 22% 20%;
+    --muted: 41 18% 85%;
+    --muted-foreground: 52 14% 32%;
+    --accent: 41 18% 84%;
+    --accent-foreground: 52 22% 20%;
+    --border: 50 14% 70%;
+    --input: 50 14% 62%;
+    --ring: 335 55% 30%;
+    --gold: 54 16% 56%;             /* oliva claro: líneas y adornos */
+    --gold-soft: 54 18% 78%;
+    --gold-ink: 55 28% 26%;         /* oliva de texto sobre marfil */
+    --night: 335 55% 23%;           /* vino */
+    --night-deep: 335 52% 19%;      /* vino del marco */
+    --on-night: 340 40% 92%;        /* rosa empolvado claro */
+    --on-night-muted: 338 30% 80%;
+    --olive: 60 32% 26%;            /* verde oliva de las bandas #59592e */
+    --on-olive: 52 30% 88%;
+    --velvet: 340 30% 14%;          /* terciopelo de fondo, oscuro */
+    --velvet-light: 350 26% 53%;    /* terciopelo de fondo, claro */
 
     --theme-mode: light;
-    --theme-primary: #111f36;
-    --theme-primary-soft: #ead9b4;
-    --theme-accent: #c2a26a;
-    --theme-ink: #121f33;
-    --theme-surface: #fefdfa;
-    --theme-bg: #faf7f2;
-    --theme-gradient-hero: radial-gradient(120% 80% at 50% 0%, #1b2d4d 0%, #0f1b2e 45%, #070d18 100%);
+    --theme-primary: #5a1a34;
+    --theme-primary-soft: #e9d3dc;
+    --theme-accent: #59592e;
+    --theme-ink: #3d3a26;
+    --theme-surface: #f1ede6;
+    --theme-bg: #eae6dd;
+    --theme-gradient-hero: linear-gradient(#5a1a34, #5a1a34);
 }
 
 /* ─── Tema: Admin (panel privado, paleta neutral) ─────────────────────── */

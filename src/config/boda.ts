@@ -34,6 +34,12 @@ export const nombresCompletos = {
   dos: "María Alejandra García Martínez"
 } as const;
 
+/** Cómo os llamáis entre vosotros: los nombres en caligrafía de la portada. */
+export const nombresCortos = {
+  uno: "Jose",
+  dos: "Male"
+} as const;
+
 /** "Jose Alberto & María Alejandra": cabeceras, título de la web, correos, QR. */
 export const nombresPareja = `${pareja.uno} & ${pareja.dos}`;
 
@@ -59,8 +65,10 @@ export const evento = {
   zonaHoraria: "America/Panama",
   /** Lugar de la recepción (la fiesta). */
   lugar: {
-    nombre: "The Westin Panama",
-    ciudad: "Costa del Este, Panamá",
+    /** Salón dentro del hotel. */
+    salon: "Salón Gran Cristal",
+    nombre: "Hotel Westin",
+    ciudad: "Costa del Este",
     /** Dirección que se busca en Google Maps / Apple Maps / Waze. */
     direccionMapa: "The Westin Panama, Costa del Este, Panamá",
     /** Código de país para los datos estructurados de buscadores. */
@@ -69,12 +77,12 @@ export const evento = {
 } as const;
 
 /**
- * Iglesia de la ceremonia. Mientras `direccionMapa` sea null, la web la
- * muestra como "por confirmar" y no enseña mapa.
+ * Iglesia de la ceremonia. Si `direccionMapa` es null, la web la muestra
+ * como "por confirmar" y no enseña mapa.
  */
 export const ceremonia: { nombre: string; direccionMapa: string | null } = {
-  nombre: "Iglesia por confirmar",
-  direccionMapa: null
+  nombre: "Iglesia Nuestra Señora de Guadalupe",
+  direccionMapa: "Parroquia Nuestra Señora de Guadalupe, Ciudad de Panamá"
 };
 
 /**
@@ -132,7 +140,7 @@ export const textos: Record<WeddingLocale, TextosIdioma> = {
     descripcionSeo: `Boda de ${nombresParejaEnFrase.es} · 27 de febrero de 2027 · Ciudad de Panamá. Información del día y confirmación de asistencia.`,
     ciudad: "Ciudad de Panamá",
     lugarDescripcion:
-      "Frente a la bahía de Panamá, en Costa del Este: el escenario de nuestra recepción, con la ciudad iluminada de fondo.",
+      "Frente a la bahía de Panamá, en Costa del Este: el escenario de nuestra fiesta, con la ciudad iluminada de fondo.",
     transporteTitulo: "Transporte para invitados",
     transporteTexto: `Salida a las ${autobus.salida}. Regreso a las ${autobus.regresos.join(" y ")}.`,
     paradaAutobus: "Punto de recogida por confirmar",
@@ -167,16 +175,16 @@ export const programa: Record<WeddingLocale, Array<{ hora: string; titulo: strin
     {
       hora: horario.ceremonia,
       titulo: "Ceremonia religiosa",
-      texto: "Nos daremos el sí en la iglesia. Te confirmaremos el lugar muy pronto."
+      texto: `Nos daremos el sí en la ${ceremonia.nombre}.`
     },
     {
       hora: horario.recepcion,
       titulo: "Recepción y fiesta",
-      texto: `Cóctel de bienvenida, cena, brindis y baile hasta la madrugada en ${evento.lugar.nombre}, ${evento.lugar.ciudad}.`
+      texto: `Cóctel de bienvenida, cena, brindis y baile hasta la madrugada en el ${evento.lugar.salon} del ${evento.lugar.nombre}, ${evento.lugar.ciudad}.`
     }
   ],
   ca: [
-    { hora: horario.ceremonia, titulo: "Cerimònia religiosa", texto: "Us confirmarem l'església molt aviat." },
+    { hora: horario.ceremonia, titulo: "Cerimònia religiosa", texto: `${ceremonia.nombre}.` },
     {
       hora: horario.recepcion,
       titulo: "Recepció i festa",
@@ -195,8 +203,7 @@ export const preguntas: Record<WeddingLocale, Array<{ pregunta: string; respuest
     },
     {
       pregunta: "¿Dónde será la ceremonia?",
-      respuesta:
-        "En una iglesia de la Ciudad de Panamá que confirmaremos muy pronto. Actualizaremos esta web y te avisaremos en cuanto la tengamos."
+      respuesta: `En la ${ceremonia.nombre}, a las 7:00 p. m. Después continuamos la celebración en el ${evento.lugar.salon} del ${evento.lugar.nombre}, en ${evento.lugar.ciudad}. En «Cómo llegar» tienes los mapas.`
     },
     {
       pregunta: "¿Puedo llevar acompañante o niños?",

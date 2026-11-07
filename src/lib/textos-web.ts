@@ -51,6 +51,13 @@ type TextosWeb = {
     verMapa: string;
     unidades: { dias: string; horas: string; minutos: string; segundos: string };
     cuentaAtras: string;
+    nosCasamos: string;
+    laCeremonia: string;
+    laFiesta: string;
+    confirmaTitulo: string;
+    clickAqui: string;
+    teEsperamos: string;
+    vestimentaTitulo: string;
   };
   agenda: { titulo: string; intro: string };
   informacion: {
@@ -119,13 +126,20 @@ export const textosWeb: Record<WeddingLocale, TextosWeb> = {
       aContinuacion: "A continuación",
       porConfirmar: "Lugar por confirmar",
       invitacionTitulo: "Tenemos el honor de invitarte",
-      elGranDia: "El gran día",
+      elGranDia: "El Gran Día",
       detalles: "Detalles",
       nosAcompanas: "¿Nos acompañas?",
       nosAcompanasTexto: (fecha) => `Te agradeceremos confirmar tu asistencia antes del ${fecha}.`,
       verMapa: "Cómo llegar",
       unidades: { dias: "Días", horas: "Horas", minutos: "Minutos", segundos: "Segundos" },
-      cuentaAtras: "Cuenta atrás para la boda"
+      cuentaAtras: "Cuenta atrás para la boda",
+      nosCasamos: "¡nos casamos!",
+      laCeremonia: "La Ceremonia",
+      laFiesta: "La Fiesta",
+      confirmaTitulo: "Confirma tu asistencia",
+      clickAqui: "Click aquí",
+      teEsperamos: "¡Te esperamos!",
+      vestimentaTitulo: "código de vestimenta"
     },
     agenda: { titulo: "Programa", intro: "Horario aproximado del día." },
     informacion: {
@@ -198,7 +212,14 @@ export const textosWeb: Record<WeddingLocale, TextosWeb> = {
       nosAcompanasTexto: (fecha) => `Et agrairem que confirmis la teva assistència abans del ${fecha}.`,
       verMapa: "Com arribar",
       unidades: { dias: "Dies", horas: "Hores", minutos: "Minuts", segundos: "Segons" },
-      cuentaAtras: "Compte enrere per al casament"
+      cuentaAtras: "Compte enrere per al casament",
+      nosCasamos: "ens casem!",
+      laCeremonia: "La Cerimònia",
+      laFiesta: "La Festa",
+      confirmaTitulo: "Confirma la teva assistència",
+      clickAqui: "Clica aquí",
+      teEsperamos: "T'esperem!",
+      vestimentaTitulo: "codi de vestimenta"
     },
     agenda: { titulo: "Programa", intro: "Horari aproximat del dia." },
     informacion: {

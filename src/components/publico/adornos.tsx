@@ -2,134 +2,125 @@ import { iniciales } from "@/config/boda";
 import { cn } from "@/lib/utils";
 
 /**
- * Piezas decorativas de la web de invitados. Son puramente ornamentales:
- * todas van con aria-hidden para que los lectores de pantalla las salten.
+ * Piezas decorativas de la web de invitados. Son ornamentales: llevan
+ * aria-hidden para que los lectores de pantalla las salten.
  */
 
-/** Monograma con las iniciales de la pareja dentro de un doble aro. */
-export function Monograma({ className, tamano = 88 }: { className?: string; tamano?: number }) {
+/** Monograma: las iniciales en caligrafía, entrelazadas, dentro de un óvalo fino. */
+export function Monograma({ className, tamano = 44 }: { className?: string; tamano?: number }) {
   const [uno, dos] = iniciales.split("&");
 
   return (
     <span
       aria-hidden
-      className={cn("relative inline-flex items-center justify-center text-gold", className)}
-      style={{ width: tamano, height: tamano }}
+      className={cn("relative inline-flex items-center justify-center", className)}
+      style={{ width: tamano, height: tamano * 1.22 }}
     >
-      <svg viewBox="0 0 100 100" className="absolute inset-0 size-full" fill="none" stroke="currentColor">
-        <circle cx="50" cy="50" r="48" strokeWidth="0.6" />
-        <circle cx="50" cy="50" r="44.5" strokeWidth="0.35" strokeDasharray="0.6 2.4" />
-        <path d="M50 1.5 L51.6 4 L50 6.5 L48.4 4 Z M50 93.5 L51.6 96 L50 98.5 L48.4 96 Z" fill="currentColor" stroke="none" />
+      <svg viewBox="0 0 100 122" className="absolute inset-0 size-full" fill="none" stroke="currentColor">
+        <ellipse cx="50" cy="61" rx="47" ry="58" strokeWidth="1.6" opacity="0.75" />
+        <ellipse cx="50" cy="61" rx="42" ry="53" strokeWidth="0.8" opacity="0.5" />
       </svg>
-      <span className="font-display font-light leading-none" style={{ fontSize: tamano * 0.3 }}>
+      <span className="font-script leading-none" style={{ fontSize: tamano * 0.5, transform: "translateY(4%)" }}>
         {uno}
-        <span className="mx-[0.06em] italic opacity-80" style={{ fontSize: "0.7em" }}>
-          &amp;
-        </span>
-        {dos}
+        <span style={{ marginLeft: "-0.28em" }}>{dos}</span>
       </span>
     </span>
   );
 }
 
-/** Filete: dos líneas finas con un rombo en el centro. */
+/** Infinito con una pequeña cola, el adorno que separa las secciones. */
 export function Filete({ className }: { className?: string }) {
   return (
-    <span aria-hidden className={cn("flex items-center justify-center gap-3 text-gold", className)}>
-      <span className="h-px w-12 bg-gradient-to-r from-transparent to-current sm:w-20" />
-      <svg viewBox="0 0 12 12" className="size-2.5" fill="currentColor">
-        <path d="M6 0 L7.4 4.6 L12 6 L7.4 7.4 L6 12 L4.6 7.4 L0 6 L4.6 4.6 Z" />
+    <span aria-hidden className={cn("flex justify-center", className)}>
+      <svg viewBox="0 0 120 30" className="h-6 w-auto" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+        <path d="M4 20 C 14 22, 22 21, 28 17" />
+        <path d="M60 15 C 50 4, 28 3, 28 15 C 28 27, 50 26, 60 15 C 70 4, 92 3, 92 15 C 92 27, 70 26, 60 15 Z" />
       </svg>
-      <span className="h-px w-12 bg-gradient-to-l from-transparent to-current sm:w-20" />
     </span>
   );
 }
 
-// Silueta de la Ciudad de Panamá vista desde la bahía: [x, ancho, alto].
-// Hacia la derecha, la torre en espiral (el "tornillo") como guiño local.
-const EDIFICIOS: Array<[number, number, number]> = [
-  [0, 46, 34], [44, 30, 52], [72, 40, 40], [110, 26, 70], [134, 44, 58], [176, 22, 92], [196, 36, 74],
-  [230, 30, 50], [258, 48, 66], [304, 24, 104], [326, 40, 86], [364, 30, 62], [392, 22, 118], [412, 44, 96],
-  [454, 30, 72], [482, 26, 128], [506, 42, 108], [546, 28, 84], [572, 36, 140], [606, 24, 116], [628, 46, 98],
-  [672, 30, 132], [700, 22, 150], [720, 40, 122], [758, 32, 104], [788, 26, 136], [812, 44, 112], [854, 28, 92],
-  [880, 36, 126], [914, 24, 100], [1000, 34, 118], [1032, 26, 96], [1056, 44, 110], [1098, 30, 84],
-  [1126, 22, 102], [1146, 40, 76], [1184, 28, 88], [1210, 46, 62], [1254, 30, 72], [1282, 38, 54], [1318, 26, 64],
-  [1342, 44, 44], [1384, 30, 52], [1412, 28, 36]
-];
-
-const HORIZONTE = 170;
-
-/** Ventanas encendidas, siempre en el mismo sitio (sin aleatoriedad en cada render). */
-function ventanas() {
-  const puntos: Array<[number, number]> = [];
-  EDIFICIOS.forEach(([x, w, h], i) => {
-    for (let fila = 10; fila < h - 6; fila += 9) {
-      for (let col = 5; col < w - 4; col += 7) {
-        // Hash entero simple: reparte las luces sin dibujar diagonales.
-        const h = Math.imul(i * 7919 + fila * 104729 + col * 1299709, 2654435761) >>> 0;
-        if (h % 100 < 14) {
-          puntos.push([x + col, HORIZONTE - h + fila]);
-        }
-      }
-    }
-  });
-  return puntos;
+/** Borde ondulado de un sello de lacre: un círculo con irregularidades suaves. */
+function bordeLacre() {
+  const puntos: string[] = [];
+  for (let i = 0; i <= 96; i++) {
+    const a = (i / 96) * Math.PI * 2;
+    const r = 46 + Math.sin(a * 7) * 1.6 + Math.sin(a * 13 + 1.3) * 1.1 + Math.sin(a * 3 + 0.4) * 1.4;
+    puntos.push(`${(50 + Math.cos(a) * r).toFixed(2)},${(50 + Math.sin(a) * r).toFixed(2)}`);
+  }
+  return `M${puntos.join(" L")} Z`;
 }
 
-const VENTANAS = ventanas();
+const BORDE_LACRE = bordeLacre();
 
-export function SkylineBahia({ className }: { className?: string }) {
+/** Sello de lacre vino con las iniciales grabadas. */
+export function SelloLacre({ className }: { className?: string }) {
+  const [uno, dos] = iniciales.split("&");
+
   return (
-    <svg
-      aria-hidden
-      viewBox="0 0 1440 240"
-      preserveAspectRatio="xMidYMax slice"
-      className={cn("pointer-events-none block w-full", className)}
-    >
+    <svg aria-hidden viewBox="0 0 100 100" className={cn("drop-shadow-[0_10px_14px_rgba(20,4,10,0.55)]", className)}>
       <defs>
-        <linearGradient id="skyline-agua" gradientUnits="userSpaceOnUse" x1="0" y1={HORIZONTE} x2="0" y2="240">
-          <stop offset="0" stopColor="hsl(38 60% 60%)" stopOpacity="0.35" />
-          <stop offset="1" stopColor="hsl(38 60% 60%)" stopOpacity="0" />
-        </linearGradient>
+        <radialGradient id="lacre-cuerpo" cx="38%" cy="32%" r="75%">
+          <stop offset="0" stopColor="#8c2c47" />
+          <stop offset="0.55" stopColor="#6b1d34" />
+          <stop offset="1" stopColor="#3f0c1c" />
+        </radialGradient>
+        <radialGradient id="lacre-centro" cx="60%" cy="65%" r="70%">
+          <stop offset="0" stopColor="#7a2440" />
+          <stop offset="1" stopColor="#4c1225" />
+        </radialGradient>
       </defs>
-
-      <g fill="hsl(218 60% 4%)" fillOpacity="0.92">
-        {EDIFICIOS.map(([x, w, h]) => (
-          <rect key={x} x={x} y={HORIZONTE - h} width={w} height={h} />
-        ))}
-        {/* Torre en espiral: pisos desplazados que giran. */}
-        {Array.from({ length: 13 }, (_, i) => {
-          const desplazamiento = Math.sin(i * 0.75) * 7;
-          return <rect key={`t${i}`} x={950 + desplazamiento} y={HORIZONTE - 14 - i * 12} width={32} height={13} />;
-        })}
-      </g>
-
-      <g fill="hsl(40 70% 70%)">
-        {VENTANAS.map(([x, y]) => (
-          <rect key={`${x}-${y}`} x={x} y={y} width="1.6" height="2.4" opacity="0.55" />
-        ))}
-      </g>
-
-      {/* La bahía: reflejos dorados que se apagan hacia abajo. */}
-      <rect x="0" y={HORIZONTE} width="1440" height={240 - HORIZONTE} fill="hsl(218 60% 5%)" />
-      <g stroke="url(#skyline-agua)" strokeLinecap="round">
-        {Array.from({ length: 9 }, (_, fila) =>
-          Array.from({ length: 14 }, (_, i) => {
-            const x = ((i * 113 + fila * 57) % 1440) + 10;
-            const largo = 18 + ((i * 7 + fila * 5) % 40);
-            return (
-              <line
-                key={`${fila}-${i}`}
-                x1={x}
-                x2={x + largo}
-                y1={HORIZONTE + 6 + fila * 7}
-                y2={HORIZONTE + 6 + fila * 7}
-                strokeWidth={1.2 - fila * 0.1}
-              />
-            );
-          })
-        )}
-      </g>
+      <path d={BORDE_LACRE} fill="url(#lacre-cuerpo)" />
+      <circle cx="50" cy="50" r="34" fill="url(#lacre-centro)" />
+      <circle cx="50" cy="50" r="34" fill="none" stroke="#a54866" strokeOpacity="0.55" strokeWidth="1.2" />
+      <circle cx="50" cy="50" r="31" fill="none" stroke="#2c0612" strokeOpacity="0.4" strokeWidth="0.8" />
+      <text
+        x="50"
+        y="60"
+        textAnchor="middle"
+        fontSize="30"
+        fill="#9e4561"
+        stroke="#3a0a19"
+        strokeOpacity="0.35"
+        strokeWidth="0.4"
+        style={{ fontFamily: "var(--font-script)" }}
+      >
+        {uno}
+        <tspan dx="-6">{dos}</tspan>
+      </text>
     </svg>
+  );
+}
+
+/**
+ * Sobre de terciopelo verde oliva visto por detrás, con la solapa cerrada.
+ * El contenido (título, sello, botón) va encima.
+ */
+export function Sobre({ children, className }: { children?: React.ReactNode; className?: string }) {
+  return (
+    <div className={cn("grano relative overflow-hidden bg-[#55553a]", className)} style={{ ["--grano" as string]: "0.16" }}>
+      <svg aria-hidden viewBox="0 0 600 380" preserveAspectRatio="none" className="absolute inset-0 -z-10 size-full">
+        <defs>
+          <linearGradient id="sobre-solapa" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#4c4c31" />
+            <stop offset="1" stopColor="#5e5e40" />
+          </linearGradient>
+          <linearGradient id="sobre-lado" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#4a4a30" />
+            <stop offset="1" stopColor="#5a5a3d" />
+          </linearGradient>
+        </defs>
+        {/* Pliegues laterales e inferior. */}
+        <polygon points="0,0 300,215 0,380" fill="url(#sobre-lado)" />
+        <polygon points="600,0 300,215 600,380" fill="#525236" />
+        <polygon points="0,380 300,190 600,380" fill="#5b5b3e" />
+        {/* Solapa superior con su sombra. */}
+        <polygon points="0,0 600,0 300,225" fill="#2e2e1c" opacity="0.35" transform="translate(0 8)" />
+        <polygon points="0,0 600,0 300,222" fill="url(#sobre-solapa)" />
+        <polyline points="0,0 300,222 600,0" fill="none" stroke="#8a8a62" strokeOpacity="0.35" strokeWidth="1.5" />
+        <polyline points="0,380 300,190 600,380" fill="none" stroke="#2e2e1c" strokeOpacity="0.35" strokeWidth="1.5" />
+      </svg>
+      {children}
+    </div>
   );
 }

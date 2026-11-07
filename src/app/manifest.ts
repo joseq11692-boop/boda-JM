@@ -12,8 +12,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: `${nombresPareja} · ${d.dateShort}`,
     start_url: "/",
     display: "standalone",
-    background_color: "#faf7f2",
-    theme_color: "#0f1b2e",
+    background_color: "#eae6dd",
+    theme_color: "#5a1a34",
     icons: [
       { src: "/favicon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
