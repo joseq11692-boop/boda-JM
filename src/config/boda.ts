@@ -30,7 +30,7 @@ export const pareja = {
 
 /** Nombres completos, para el texto de la invitación. */
 export const nombresCompletos = {
-  uno: "Jose Alberto Quil Lindo",
+  uno: "Jose Alberto Quiel Lindo",
   dos: "María Alejandra García Martínez"
 } as const;
 
